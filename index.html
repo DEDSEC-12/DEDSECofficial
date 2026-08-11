@@ -1,651 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DedSec</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEDSEC Official</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0d0d0d url('dedsecskull.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
 
-    body {
-      background-color: #000;
-      color: #ffffff;
-      font-family: 'Courier New', Courier, monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-      position: relative;
-      padding: 2rem 1rem;
-    }
+        .container {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 40px;
+            border-radius: 10px;
+            border: 1px solid #00ff66;
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
+            max-width: 800px;
+            margin: 20px;
+        }
 
-    /* Fondo animado */
-    .bg-glitch {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('dedsecskull.jpg') no-repeat center center;
-      background-size: cover;
-      opacity: 0.35;
-      z-index: 1;
-      animation: bgGlitch 4s infinite linear;
-    }
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            color: #00ff66;
+            text-shadow: 0 0 10px #00ff66;
+        }
 
-    @keyframes bgGlitch {
-      0% { transform: translate(0, 0) scale(1); filter: contrast(100%) hue-rotate(0deg); }
-      5% { transform: translate(-5px, 2px) scale(1.02); filter: contrast(180%) hue-rotate(90deg); }
-      6% { transform: translate(5px, -2px) scale(1); filter: contrast(100%); }
-      25% { opacity: 0.35; }
-      26% { opacity: 0.1; }
-      27% { opacity: 0.4; }
-      50% { transform: translate(0, 0) scale(1.01); }
-      52% { transform: translate(-10px, 5px) scale(1.05); filter: invert(20%); }
-      54% { transform: translate(0, 0) scale(1); filter: invert(0%); }
-      80% { transform: translate(3px, -3px); }
-      82% { transform: translate(-3px, 3px); }
-      100% { transform: translate(0, 0) scale(1); }
-    }
+        .subtitle {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
 
-    /* Capa CRT */
-    .scanlines {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
-      background-size: 100% 4px;
-      z-index: 2;
-      pointer-events: none;
-    }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #ffffff;
+        }
 
-    /* Contenedor del contenido */
-    .content {
-      position: relative;
-      z-index: 3;
-      text-align: center;
-      max-width: 850px;
-      width: 100%;
-    }
-
-    /* Título principal */
-    h1.title {
-      font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      position: relative;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
-      margin-bottom: 0.5rem;
-    }
-
-    h1.title::before, h1.title::after {
-      content: "Dedsec";
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      clip: rect(0, 0, 0, 0);
-    }
-
-    h1.title::before {
-      left: -2px;
-      text-shadow: 2px 0 #ff0055;
-      animation: glitch-anim-1 2s infinite linear alternate-reverse;
-    }
-
-    h1.title::after {
-      left: 2px;
-      text-shadow: -2px 0 #00e5ff;
-      animation: glitch-anim-2 3s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitch-anim-1 {
-      0% { clip: rect(20px, 9999px, 15px, 0); }
-      20% { clip: rect(60px, 9999px, 70px, 0); }
-      40% { clip: rect(10px, 9999px, 85px, 0); }
-      60% { clip: rect(40px, 9999px, 30px, 0); }
-      80% { clip: rect(80px, 9999px, 5px, 0); }
-      100% { clip: rect(30px, 9999px, 50px, 0); }
-    }
-
-    @keyframes glitch-anim-2 {
-      0% { clip: rect(25px, 9999px, 90px, 0); }
-      20% { clip: rect(10px, 9999px, 40px, 0); }
-      40% { clip: rect(50px, 9999px, 15px, 0); }
-      60% { clip: rect(70px, 9999px, 80px, 0); }
-      80% { clip: rect(15px, 9999px, 35px, 0); }
-      100% { clip: rect(90px, 9999px, 5px, 0); }
-    }
-
-    p.subtitle {
-      margin-bottom: 2rem;
-      font-size: 1.2rem;
-      color: #00ff41;
-      letter-spacing: 2px;
-      text-shadow: 0 0 5px #00ff41;
-    }
-
-    /* Bloque del Manifiesto */
-    .manifesto-box {
-      background: rgba(0, 0, 0, 0.75);
-      border: 1px solid #00ff41;
-      box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-      padding: 1.5rem 2rem;
-      text-align: left;
-      position: relative;
-      margin-bottom: 2rem;
-    }
-
-    .manifesto-box::before {
-      content: "[MANIFESTO_FILE]";
-      position: absolute;
-      top: -12px;
-      left: 15px;
-      background: #000;
-      color: #00ff41;
-      padding: 0 8px;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-    }
-
-    .manifesto-text {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #e0e0e0;
-      letter-spacing: 1px;
-    }
-
-    .highlight {
-      color: #00ff41;
-      font-weight: bold;
-    }
-
-    .join-text {
-      display: block;
-      margin-top: 1rem;
-      color: #ff0055;
-      font-weight: bold;
-      text-shadow: 0 0 5px #ff0055;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    /* Contenedor de botones */
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Estilos generales para botones */
-    .btn-cyber {
-      background: transparent;
-      padding: 12px 30px;
-      font-size: 1.2rem;
-      font-family: inherit;
-      font-weight: bold;
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      width: 280px;
-    }
-
-    /* Botón DESPIERTA */
-    .btn-wake {
-      border: 2px solid #ff0055;
-      color: #ff0055;
-      text-shadow: 0 0 8px #ff0055;
-      box-shadow: 0 0 10px rgba(255, 0, 85, 0.3);
-    }
-
-    .btn-wake:hover {
-      background: #ff0055;
-      color: #000;
-      box-shadow: 0 0 20px #ff0055;
-      text-shadow: none;
-    }
-
-    /* Botón OBJETIVOS */
-    .btn-targets {
-      border: 2px solid #00e5ff;
-      color: #00e5ff;
-      text-shadow: 0 0 8px #00e5ff;
-      box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-    }
-
-    .btn-targets:hover {
-      background: #00e5ff;
-      color: #000;
-      box-shadow: 0 0 20px #00e5ff;
-      text-shadow: none;
-    }
-
-    /* Modales / Ventanas Emergentes */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      z-index: 10;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-
-    .modal-content {
-      background: #050505;
-      max-width: 850px;
-      width: 100%;
-      padding: 2rem;
-      text-align: left;
-      position: relative;
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-
-    /* Modal DESPIERTA Borde */
-    #wakeModal .modal-content {
-      border: 2px solid #ff0055;
-      box-shadow: 0 0 25px rgba(255, 0, 85, 0.5);
-    }
-
-    /* Modal OBJETIVOS Borde */
-    #targetsModal .modal-content {
-      border: 2px solid #00e5ff;
-      box-shadow: 0 0 25px rgba(0, 229, 255, 0.5);
-    }
-
-    .modal-header {
-      font-size: 1.8rem;
-      border-bottom: 1px solid;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    #wakeModal .modal-header {
-      color: #ff0055;
-      border-color: #ff0055;
-    }
-
-    #targetsModal .modal-header {
-      color: #00e5ff;
-      border-color: #00e5ff;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    #wakeModal .close-btn { color: #ff0055; }
-    #targetsModal .close-btn { color: #00e5ff; }
-
-    .modal-body {
-      color: #cccccc;
-      line-height: 1.6;
-      font-size: 1rem;
-    }
-
-    .warning-text {
-      color: #ffffff;
-      margin-bottom: 1.5rem;
-      border-left: 3px solid #ff0055;
-      padding-left: 10px;
-    }
-
-    .target-warning-text {
-      color: #ffffff;
-      margin-bottom: 1.5rem;
-      border-left: 3px solid #00e5ff;
-      padding-left: 10px;
-    }
-
-    /* Estilos de Tablas y Listas */
-    .list-title {
-      color: #00ff41;
-      margin-top: 1.5rem;
-      margin-bottom: 0.8rem;
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-    }
-
-    .records-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .records-table th, .records-table td {
-      border: 1px solid #333;
-      padding: 8px 12px;
-      text-align: left;
-      font-size: 0.9rem;
-    }
-
-    .records-table th {
-      background: #111;
-      color: #00ff41;
-    }
-
-    .status-deceased { color: #ff0055; font-weight: bold; }
-    .status-missing { color: #ffcc00; font-weight: bold; }
-    .status-unknown { color: #00e5ff; font-weight: bold; }
-
-    .info-footer-text {
-      color: #a0a0a0;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      border-top: 1px dashed #333;
-      padding-top: 1rem;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
-    .section-subtitle {
-      color: #ff0055;
-      font-size: 1.4rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #ff0055;
-      display: inline-block;
-      text-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
-    }
-
-    .section-subtitle-cyan {
-      color: #00e5ff;
-      font-size: 1.4rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 1.5rem;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid #00e5ff;
-      display: inline-block;
-      text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
-    }
-
-    .reason-item {
-      background: rgba(20, 20, 20, 0.8);
-      border-left: 3px solid #00ff41;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .target-item {
-      background: rgba(20, 20, 20, 0.8);
-      border-left: 3px solid #00e5ff;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    /* Resaltado especial para el objetivo crítico #4 */
-    .target-item-critical {
-      background: rgba(35, 5, 15, 0.85);
-      border-left: 4px solid #ff0055;
-      border-right: 1px solid rgba(255, 0, 85, 0.4);
-      padding: 1.2rem;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.6;
-      box-shadow: 0 0 15px rgba(255, 0, 85, 0.25);
-      animation: criticalPulse 2.5s infinite alternate;
-      position: relative;
-    }
-
-    .target-item-critical::before {
-      content: "[PRIORIDAD_MAXIMA]";
-      position: absolute;
-      top: -10px;
-      right: 15px;
-      background: #ff0055;
-      color: #000;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 2px 6px;
-      letter-spacing: 1px;
-    }
-
-    @keyframes criticalPulse {
-      0% { box-shadow: 0 0 10px rgba(255, 0, 85, 0.2); }
-      100% { box-shadow: 0 0 22px rgba(255, 0, 85, 0.6); }
-    }
-
-    .target-item ul {
-      margin-top: 0.5rem;
-      margin-left: 1.2rem;
-    }
-
-    .target-item li {
-      margin-bottom: 0.5rem;
-    }
-
-    .reason-item strong { color: #00ff41; }
-    .target-item strong { color: #00e5ff; }
-    .target-item-critical strong { color: #ff0055; text-shadow: 0 0 8px rgba(255, 0, 85, 0.6); }
-
-    .cyber-link {
-      color: #00e5ff;
-      text-decoration: none;
-      word-break: break-all;
-      transition: color 0.2s ease;
-    }
-
-    .cyber-link:hover {
-      color: #ff0055;
-      text-decoration: underline;
-    }
-  </style>
+        .tagline {
+            margin-top: 30px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #00ff66;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Fondo animado -->
-  <div class="bg-glitch"></div>
-  
-  <!-- Overlay CRT -->
-  <div class="scanlines"></div>
-
-  <!-- Contenido Principal -->
-  <div class="content">
-    <h1 class="title">Dedsec</h1>
-    <p class="subtitle">&gt; Join us. We will give you the truth.</p>
-
-    <div class="manifesto-box">
-      <p class="manifesto-text">
-        Somos un grupo peleando por nuestra <span class="highlight">privacidad</span>, <span class="highlight">derechos</span>, y por nuestra <span class="highlight">salud y lugar</span> en este mundo, no somos exiliados, somos gente peleando por algo que es nuestro... 
-        <span class="join-text">&gt; Únetenos.</span>
-      </p>
+    <div class="container">
+        <h1>Privacidad.Seguridad.Derechos.Igualdad</h1>
+        <div class="subtitle">NO MAS SECRETOS</div>
+        <p>DedSec te da la verdad, te da las herramientas, pero no elegimos por ti.</p>
+        <div class="tagline">JOIN US // CHANGE OUR FUTURE</div>
     </div>
-
-    <!-- Grupo de Botones -->
-    <div class="button-group">
-      <button class="btn-cyber btn-wake" onclick="openModal('wakeModal')">&gt; DESPIERTA &lt;</button>
-      <button class="btn-cyber btn-targets" onclick="openModal('targetsModal')">&gt; OBJETIVOS &lt;</button>
-    </div>
-  </div>
-
-  <!-- Modal / Apartado DESPIERTA -->
-  <div class="modal-overlay" id="wakeModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span>[APARTADO: DESPIERTA]</span>
-        <button class="close-btn" onclick="closeModal('wakeModal')">[X]</button>
-      </div>
-      <div class="modal-body">
-        <p class="warning-text">
-          Tenemos que arruinar el sistema que nos apedrea con todas las nuevas reglas que nos imponen sin siquiera preguntarnos... levántate y abre los ojos, aquí te dejamos una lista de <strong>DESFALLECIDOS</strong> y <strong>DESAPARECIDOS</strong> por la élite.
-        </p>
-
-        <div class="list-title">&gt; REGISTROS CLASIFICADOS DE LA ÉLITE:</div>
-
-        <table class="records-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>ALIAS / SUJETO</th>
-              <th>ESTADO</th>
-              <th>ÚLTIMA UBICACIÓN</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Tyrone Jose Gonzales Orama</td>
-              <td>Cancerbero</td>
-              <td class="status-deceased">Fallecido</td>
-              <td>Maracay, estado Aragua, Venezuela</td>
-            </tr>
-            <tr>
-              <td>Jacobo Grinberg Zylberbaum</td>
-              <td>NO REGISTRO</td>
-              <td class="status-missing">DESAPARECIDO</td>
-              <td>Su casa</td>
-            </tr>
-            <tr>
-              <td>James Forrestal</td>
-              <td>NO REGISTRO</td>
-              <td class="status-deceased">FALLECIDO</td>
-              <td>Piso 16 del Hospital Naval de Bethesda</td>
-            </tr>
-            <tr>
-              <td>Amy Eskridge</td>
-              <td>NO REGISTRADO</td>
-              <td class="status-deceased">FALLECIDA</td>
-              <td>su residencia en Huntsville, Alabama, Estados Unidos</td>
-            </tr>
-            <tr>
-              <td>Tupac Amaru Shakur</td>
-              <td>2Pac</td>
-              <td class="status-deceased">Fallecido</td>
-              <td>University Medical Center of Southern Nevada</td>
-            </tr>
-            <tr>
-              <td>James Eugene Carrey</td>
-              <td>Jim Carrey</td>
-              <td class="status-unknown">DESCONOCIDO</td>
-              <td>París, Francia</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p class="info-footer-text">
-          Estas son 6 de miles de personas que están desaparecidas o desfallecidas y no se conoce nada sobre ellas por el momento, actualizaremos esta lista cuando tengamos más información sobre el tema, más abajo tendrás la información de cada uno y los posibles actos que cometieron para llegar a ese punto...
-        </p>
-
-        <h2 class="section-subtitle">RAZONES</h2>
-
-        <div class="reason-item">
-          <p><strong>1.- Canserbero:</strong> Muchas canciones en contra de su antiguo gobierno (Nicolas Maduro) y una canción que resalta de todas llamada <em>"Nos Quieres"</em> que habla de cómo el sistema nos mantiene. Una de las frases más icónicas de esa canción es <em>"Nos quieren sin criterio, con un solo hemisferio, nos quieren consumiendo y el tiempo perdiendo"</em>, <em>"nos quieren ignorantes, nos quieren complaciente, nos quieren como zombies sin dientes, nos prefieren sin juicio sumisos al vicio al borde del precipicio del desquicio"</em>.</p>
-          <br>
-          <p>Enlace al tema: <a class="cyber-link" href="https://www.youtube.com/watch?v=esCpEX3HkYQ&list=RDesCpEX3HkYQ&start_radio=1" target="_blank" rel="noopener noreferrer">https://www.youtube.com/watch?v=esCpEX3HkYQ&list=RDesCpEX3HkYQ&start_radio=1</a></p>
-        </div>
-
-        <div class="reason-item">
-          <p><strong>2.- Jacobo Grinberg:</strong> Le demostró a la gente que los poderes psíquicos eran reales y después de unos años desapareció sin dejar rastro.</p>
-        </div>
-
-        <div class="reason-item">
-          <p><strong>3.- James Forrestal:</strong> Desclasificó archivos/documentos que afirmaban la vida extraterrestre, días después de desclasificarlos, murió en circunstancias extrañas.</p>
-        </div>
-
-        <div class="reason-item">
-          <p><strong>4.- Amy Eskridge:</strong> Es una de los 12 científicos cuyas muertes están siendo investigadas por el gobierno federal. Amy estudiaba específicamente las propiedades de la anti-gravedad y hablaba sobre una especie desconocida a la cual llamaba los "ultraterrestres". Estos "ultraterrestres" tienen variables: los "P-52", que asegura que vienen de 52 mil años en el futuro, y los "P-47", que asegura que vienen de 47 mil años en el futuro. Según Amy, son seres del futuro que lograron evitar grandes cataclismos gracias a que lograron dominar la vida en las profundidades de la Tierra/Océano. Según ella, como los seres vivos nos adaptamos a nuestro entorno y el entorno de estas "criaturas" del "futuro" era la oscura profundidad, evolucionaron hasta tener la piel pálida y ojos oscuros y gigantescos. Cuatro años después de esta entrevista, junto a la Universidad de Harvard y la Universidad de Montana, publicaron un papel donde se hablaba de los criptoterrestres. Amy para ese punto ya estaba FALLECIDA en condiciones muy extrañas; ella aseguraba que la perseguían carros con las ventanas polarizadas, carros sin placas y algunos carros lujosos.</p>
-        </div>
-
-        <div class="reason-item">
-          <p><strong>5.- Tupac Shakur:</strong> Chuk Night colaboró con los controladores y la justicia para asesinar a Tupac. Claro que nada de esto tiene sentido si lo decimos así, ya que Chuk Night era dueño de Death Row Records y su principal artista era Tupac. Chuk tenía una deuda con Tupac de más de 13 millones de dólares, además se rumoreaba que Tupac iba a dejar Death Row llevándose millones de dólares en canciones. La muerte de Tupac era el negocio perfecto para Chuk (pertenece al grupo de los masones, en su carro puedes identificar un texto que dice "Iluminati" y el logo de los masones). A su vez, la élite también se benefició, ya que con la muerte de Tupac podían frenar el movimiento revolucionario que el rapero estaba generando, que para la élite siempre fue una amenaza. La élite siempre hace sus maniobras de forma inteligente... ¿Y qué mejor forma de lograr la muerte de Tupac que colaborando con el mismo jefe de su sello discográfico? Eso explica el porqué Chuk Night salió ileso del tiroteo en el cual su única herida fue en el cuello, la cual fue provocada por los vidrios del auto...</p>
-        </div>
-
-        <div class="reason-item">
-          <p><strong>6.- Jim Carrey:</strong> NO DISPONEMOS DE TODA LA INFORMACIÓN.</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal / Apartado OBJETIVOS -->
-  <div class="modal-overlay" id="targetsModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <span>[APARTADO: OBJETIVOS]</span>
-        <button class="close-btn" onclick="closeModal('targetsModal')">[X]</button>
-      </div>
-      <div class="modal-body">
-        <p class="target-warning-text">
-          Listado de directivas y prioridades operativas para desmantelar la red de control.
-        </p>
-
-        <h2 class="section-subtitle-cyan">LISTA DE OBJETIVOS</h2>
-
-        <div class="target-item">
-          <p><strong>1.- Acabar con los "DATA CENTERS" / Destruirlos:</strong> Desmantelar y neutralizar los centros de datos centralizados que almacenan, procesan y monitorean la información de la población para mantener el control sobre la privacidad global.</p>
-        </div>
-
-        <div class="target-item">
-          <p><strong>2.- Acabar con Nestlé y su red de alimentos ULTRA procesados:</strong> ¿Por qué? Aquí te decimos el porqué...</p>
-          <ul>
-            <li><strong>👶 Escándalo de la leche de fórmula (Años 70):</strong> Es la controversia histórica más grave de la compañía. Nestlé promovió agresivamente su leche en polvo en países en desarrollo de ingresos bajos. Vistió a sus vendedoras como "enfermeras" para convencer a madres vulnerables de no amamantar. Al no tener acceso a agua potable, miles de familias mezclaron la fórmula con agua contaminada. Esto causó desnutrición severa y la muerte de miles de bebés, provocando un boicot internacional que aún persiste.</li>
-            <li><strong>💧 Privatización y explotación del agua:</strong> Nestlé compra derechos de agua en zonas con sequía extrema para embotellarla y revenderla. Extrae millones de litros de acuíferos en comunidades indígenas y empobrecidas, limitando el acceso local. Su expresidente, Peter Brabeck-Letmathe, causó indignación al sugerir en el año 2000 que el agua no debería considerarse un derecho humano, sino una necesidad comercial. En Francia, la empresa enfrentó multas millonarias por purificar ilegalmente aguas minerales contaminadas mediante sistemas prohibidos.</li>
-            <li><strong>🧒 Trabajo infantil y esclavitud en el cacao:</strong> Nestlé es uno de los mayores compradores de cacao en África Occidental (Costa de Marfil y Ghana). Múltiples investigaciones demuestran que su cadena de suministro utiliza mano de obra infantil forzada. Los niños son sometidos a jornadas peligrosas, desnutrición y uso de herramientas cortantes sin protección. En 2015, la firma también admitió el uso de mano de obra esclava en su cadena de suministro de mariscos en Tailandia.</li>
-            <li><strong>🌴 Destrucción ambiental y deforestación:</strong> Greenpeace demostró que los proveedores de aceite de palma de Nestlé destruyen las selvas de Indonesia. Esta deforestación masiva ha puesto en peligro crítico de extinción al orangután. Además, auditorías ambientales globales la posicionan constantemente como una de las corporaciones que más contaminación por plástico genera en el mundo.</li>
-            <li><strong>🍩 Productos insalubres y doble moral nutricional:</strong> Un documento interno filtrado en 2021 reveló que más del 60% de sus alimentos y bebidas comerciales no cumplen con la definición reconocida de salud. Una investigación de Public Eye expuso que Nestlé añade altos niveles de azúcar a sus productos infantiles (como Cerelac o Nido) vendidos en países de América Latina, Asia y África. Estos mismos productos se comercializan completamente libres de azúcares añadidos en Suiza y la Unión Europea.</li>
-            <li><strong>⚠️ Retiros de productos por contaminación (Bacos recurrentes):</strong> La empresa ha tenido graves fallas en sus controles sanitarios. En 2022, un brote de E. coli en sus pizzas Buitoni en Francia provocó la muerte de dos niños. A inicios de 2026, Nestlé ejecutó un retiro masivo de sus fórmulas infantiles (NAN, SMA y BEBA) en más de 60 países debido a una posible contaminación con la toxina bacteriana cereúlida.</li>
-          </ul>
-        </div>
-
-        <div class="target-item">
-          <p><strong>3.- NO PERMITIR EL CONTROL DE NUESTROS CHATS:</strong> "Chat Control" es el término popular utilizado para referirse a una controvertida propuesta legislativa de la Unión Europea orientada a combatir el abuso sexual infantil en línea. El proyecto busca obligar a las plataformas de mensajería (como WhatsApp, Signal o Telegram) a escanear automáticamente los mensajes privados, fotos y archivos de los usuarios en busca de material ilegal, incluso dentro de comunicaciones protegidas por cifrado de extremo a extremo. TENEMOS QUE PROTEGER NUESTRA PRIVACIDAD.</p>
-        </div>
-
-        <!-- OBJETIVO 4 DESTACADO -->
-        <div class="target-item-critical">
-          <p><strong>4.- ACABAR CON EL SISTEMA:</strong> Tenemos que despertar, nos matan como ratas de laboratorio, hacen propuestas sin preguntarnos, crean guerras de las cuales salimos heridos los civiles, NO nos ayudan, SACRIFICAN BEBES, SACRIFICAN NIÑOS/NIÑAS, crearé otro apartado para este tema...</p>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function openModal(modalId) {
-      document.getElementById(modalId).style.display = 'flex';
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = 'none';
-    }
-
-    // Cerrar modales al hacer clic fuera del cuadro de contenido
-    window.onclick = function(event) {
-      if (event.target.classList.contains('modal-overlay')) {
-        event.target.style.display = "none";
-      }
-    }
-  </script>
 
 </body>
 </html>
